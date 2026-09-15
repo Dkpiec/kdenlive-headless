@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  kdenlive:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: kdenlive-headless
+    labels:
+      - com.coolify.service=true
+      - com.coolify.name=kdenlive-headless
+    environment:
+      - KDENLIVE_API_KEY=${KDENLIVE_API_KEY}
+      - TZ=Asia/Kolkata
+    volumes:
+      - /opt/data/kdenlive-workspace:/workspace
+    ports:
+      - "8080"
+    restart: unless-stopped
+    networks:
+      - hermesnet
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+networks:
+  hermesnet:
+    name: gw5navcuqga1qhxypunyvhya
+    external: true

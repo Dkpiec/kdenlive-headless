@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mlt profile="av_profile_pal_25fps">
+  <producer id="producer_0">
+    <property name="resource">/workspace/projects/input.mp4</property>
+    <property name="type">consumer</property>
+  </producer>
+  <playlist id="playlist_0">
+    <entry producer="producer_0" in="0" out="0"/>
+  </playlist>
+  <tractor id="tractor_0">
+    <track index="video" producer="playlist_0"/>
+    <track index="audio" producer="playlist_0"/>
+  </tractor>
+  <consumer id="consumer_0">
+    <property name="resource">/workspace/results/output.mp4</property>
+    <property name="target_profile">av_profile_pal_25fps</property>
+  </consumer>
+</mlt>
