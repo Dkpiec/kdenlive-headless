@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libassimp5 \
     libmagickwand-6.q16-6 \
     libswscale6 \
-    libx264-163 \
+    libx264-164 \
     libx265-199 \
     libvulkan1 \
     curl \
