@@ -1,15 +1,7 @@
 # Kdenlive Headless Render Stack for Coolify
-# 
-# This docker-compose file deploys a headless video rendering service
-# using Kdenlive's MLT backend with a FastAPI-based control API.
-#
-# IMPORTANT: This service is COMPLETELY SEPARATE from the trading dashboard
-# and uses no reserved URLs. Access is internal only via Coolify networks.
-#
-# Project UUID (in Coolify): Create a new "Kdenlive Media" project
-# Internal URL for Hermes: http://kdenlive-headless:8080
-
-version: '3.8'
+# Built from Git (github.com/Dkpiec/kdenlive-headless) on the Coolify host.
+# Fully internal: no public URL, no reserved ngrok endpoint.
+# Hermes reaches it at: http://kdenlive-headless:8080
 
 services:
   kdenlive-headless:
@@ -17,14 +9,12 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: kdenlive-headless
-    image: localhost:3200/kdenlive-headless:latest
     environment:
       - KDENLIVE_API_KEY=${KDENLIVE_API_KEY}
       - TZ=Asia/Kolkata
+      - WORKSPACE_PATH=/workspace
     volumes:
-      - /opt/data/kdenlive-workspace:/workspace
-    ports:
-      - "8080"
+      - kdenlive_workspace:/workspace
     restart: unless-stopped
     networks:
       - hermesnet
@@ -33,7 +23,10 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 60s
+      start_period: 90s
+
+volumes:
+  kdenlive_workspace:
 
 networks:
   hermesnet:
